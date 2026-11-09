@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Revisar factura</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#2F5D3A}a:hover{color:#1F4128}
+button,input,select{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 1180px; box-sizing: border-box; background: #F6F3EC; color: #1C1F1A; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; flex-direction: column; position: relative">
+
+  <header style="padding: 20px 20px 12px; display: flex; align-items: center; gap: 8px">
+    <a href="Despensa.dc.html" aria-label="Volver" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; margin-left: -10px; color: #1C1F1A">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </a>
+    <div style="display: flex; flex-direction: column">
+      <h1 style="margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.01em">Revisar factura</h1>
+      <span style="font-size: 13px; color: #5E6259">Nada entra a tu despensa hasta que confirmes</span>
+    </div>
+  </header>
+
+  <div style="padding: 0 20px; display: flex; flex-direction: column; gap: 14px">
+
+    <section aria-label="Resumen de la factura" style="background: #FFFDF8; border: 1px solid #E2DCCD; border-radius: 12px 12px 0 0; padding: 16px 16px 14px; font-family: 'IBM Plex Mono', monospace; display: flex; flex-direction: column; gap: 10px; position: relative">
+      <div style="display: flex; justify-content: space-between; font-size: 14px">
+        <span style="font-weight: 600">D1</span>
+        <span style="color: #5E6259">01/11/2026</span>
+      </div>
+      <div style="border-top: 1px dashed #BDB6A6"></div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; font-size: 13px">
+        <div style="display: flex; flex-direction: column; gap: 2px">
+          <span style="color: #5E6259; font-size: 11px; letter-spacing: 0.08em">TOTAL IMPRESO</span>
+          <span style="font-size: 17px; font-weight: 600">$130.690</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 2px">
+          <span style="color: #5E6259; font-size: 11px; letter-spacing: 0.08em">DETECTADO</span>
+          <span style="font-size: 17px; font-weight: 600; color: #7A4F00">$118.000</span>
+        </div>
+      </div>
+      <button style="align-self: flex-start; height: 32px; padding: 0; border: none; background: none; color: #2F5D3A; font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer">Ver texto leído ▾</button>
+      <svg width="100%" height="8" viewBox="0 0 348 8" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; left: 0; bottom: -8px; display: block"><path d="M0 0 L348 0 L348 0 L340 8 L332 0 L324 8 L316 0 L308 8 L300 0 L292 8 L284 0 L276 8 L268 0 L260 8 L252 0 L244 8 L236 0 L228 8 L220 0 L212 8 L204 0 L196 8 L188 0 L180 8 L172 0 L164 8 L156 0 L148 8 L140 0 L132 8 L124 0 L116 8 L108 0 L100 8 L92 0 L84 8 L76 0 L68 8 L60 0 L52 8 L44 0 L36 8 L28 0 L20 8 L12 0 L4 8 L0 4 Z" fill="#FFFDF8"/></svg>
+    </section>
+
+    <div role="status" style="margin-top: 6px; display: flex; gap: 10px; align-items: flex-start; background: #F6E6BF; border-radius: 10px; padding: 12px 14px; font-size: 14px; line-height: 1.4; color: #4A3300">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 1px"><path d="M12 3l10 18H2z"/><path d="M12 10v4M12 17.5v.5"/></svg>
+      <span>Los totales no coinciden. Revisa que no falte ningún producto.</span>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-top: 4px">
+      <h2 style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #5E6259">Productos detectados</h2>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #5E6259">9</span>
+    </div>
+
+    <article style="background: #FFFDF8; border: 1px solid #E2DCCD; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; gap: 10px; align-items: flex-start">
+        <label style="flex: 1; display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #5E6259">
+          Producto
+          <input value="Arándanos 125 g" style="height: 40px; border: 1px solid #D6CFBF; border-radius: 8px; padding: 0 10px; font-size: 15px; font-weight: 600; color: #1C1F1A; background: #FFFDF8"/>
+        </label>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; padding-top: 30px">$6.500</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+        <label style="display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #5E6259">
+          Categoría
+          <select style="height: 40px; border: 1px solid #D6CFBF; border-radius: 8px; padding: 0 8px; font-size: 14px; color: #1C1F1A; background: #FFFDF8"><option>Frutas y verduras</option></select>
+        </label>
+        <label style="display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #5E6259">
+          Vence
+          <input type="date" value="2026-11-12" style="height: 40px; border: 1px solid #D6CFBF; border-radius: 8px; padding: 0 8px; font-size: 14px; font-family: 'IBM Plex Mono', monospace; color: #1C1F1A; background: #FFFDF8"/>
+        </label>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: space-between">
+        <div style="display: flex; align-items: center; border: 1px solid #D6CFBF; border-radius: 8px; height: 40px">
+          <button aria-label="Restar" style="width: 44px; height: 38px; border: none; background: none; font-size: 18px; cursor: pointer">−</button>
+          <span style="min-width: 28px; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 15px">1</span>
+          <button aria-label="Sumar" style="width: 44px; height: 38px; border: none; background: none; font-size: 18px; cursor: pointer">+</button>
+        </div>
+        <button aria-label="Quitar producto" style="width: 44px; height: 44px; border: none; background: none; color: #5E6259; cursor: pointer; display: flex; align-items: center; justify-content: center">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>
+        </button>
+      </div>
+    </article>
+
+    <article style="background: #FFFDF8; border: 2px solid #D99A1E; border-radius: 12px; padding: 13px; display: flex; flex-direction: column; gap: 10px">
+      <span style="align-self: flex-start; font-size: 12px; font-weight: 600; color: #4A3300; background: #F6E6BF; padding: 3px 8px; border-radius: 6px">Revisa cantidad × precio</span>
+      <div style="display: flex; gap: 10px; align-items: flex-start">
+        <label style="flex: 1; display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #5E6259">
+          Producto
+          <input value="Yogur griego natural" style="height: 40px; border: 1px solid #D6CFBF; border-radius: 8px; padding: 0 10px; font-size: 15px; font-weight: 600; color: #1C1F1A; background: #FFFDF8"/>
+        </label>
+        <div style="display: flex; flex-direction: column; align-items: flex-end; padding-top: 22px; font-family: 'IBM Plex Mono', monospace">
+          <span style="font-size: 14px">$11.800</span>
+          <span style="font-size: 12px; color: #5E6259">3 × $5.900</span>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+        <label style="display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #5E6259">
+          Categoría
+          <select style="height: 40px; border: 1px solid #D6CFBF; border-radius: 8px; padding: 0 8px; font-size: 14px; color: #1C1F1A; background: #FFFDF8"><option>Lácteos</option></select>
+        </label>
+        <label style="display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #5E6259">
+          Vence
+          <input type="date" style="height: 40px; border: 1px dashed #9C9586; border-radius: 8px; padding: 0 8px; font-size: 14px; font-family: 'IBM Plex Mono', monospace; color: #5E6259; background: #F6F3EC"/>
+        </label>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: space-between">
+        <div style="display: flex; align-items: center; border: 1px solid #D6CFBF; border-radius: 8px; height: 40px">
+          <button aria-label="Restar" style="width: 44px; height: 38px; border: none; background: none; font-size: 18px; cursor: pointer">−</button>
+          <span style="min-width: 28px; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 15px">3</span>
+          <button aria-label="Sumar" style="width: 44px; height: 38px; border: none; background: none; font-size: 18px; cursor: pointer">+</button>
+        </div>
+        <button aria-label="Quitar producto" style="width: 44px; height: 44px; border: none; background: none; color: #5E6259; cursor: pointer; display: flex; align-items: center; justify-content: center">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>
+        </button>
+      </div>
+    </article>
+
+    <article style="background: #EFEBE1; border: 1px solid #E2DCCD; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 10px">
+      <div style="flex: 1; display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 15px; font-weight: 600">Varsol brillante</span>
+        <span style="font-size: 13px; color: #5E6259">Aseo del hogar · no se usa en recetas</span>
+      </div>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 14px">$7.350</span>
+      <button aria-label="Editar Varsol brillante" style="width: 44px; height: 44px; border: none; background: none; color: #3C4038; cursor: pointer; display: flex; align-items: center; justify-content: center">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>
+      </button>
+    </article>
+
+    <p style="margin: 0; font-size: 13px; color: #5E6259; text-align: center">+ 6 productos más</p>
+
+    <button style="height: 48px; border: 1px dashed #9C9586; background: transparent; border-radius: 10px; font-size: 15px; font-weight: 600; color: #1C1F1A; cursor: pointer">+ Agregar producto que falta</button>
+  </div>
+
+  <footer style="margin-top: auto; border-top: 1px solid #E2DCCD; background: #FFFDF8; padding: 14px 20px 24px; display: flex; flex-direction: column; gap: 8px">
+    <span style="font-size: 13px; color: #5E6259; text-align: center"><span style="font-family: 'IBM Plex Mono', monospace">7</span> de <span style="font-family: 'IBM Plex Mono', monospace">8</span> alimentos sin fecha de vencimiento</span>
+    <a href="Despensa.dc.html" style="height: 52px; border-radius: 12px; background: #2F5D3A; color: #FFFDF8; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 16px; font-weight: 600">Confirmar 9 productos</a>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1180}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

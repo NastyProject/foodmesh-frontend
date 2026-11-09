@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --color-paper: #f6f3ec;
+  --color-surface: #fffdf8;
+  --color-sunken: #efebe1;
+  --color-ink: #1c1f1a;
+  --color-ink-2: #3c4038;
+  --color-muted: #5e6259;
+  --color-line: #e2dccd;
+  --color-line-strong: #d6cfbf;
+  --color-divider: #eee9dd;
+  --color-dashed-line: #9c9586;
+  --color-brand: #2f5d3a;
+  --color-brand-strong: #1f4128;
+  --color-urgent: #b23a1e;
+  --color-urgent-stripe: #c8472b;
+  --color-urgent-bg: #f5dcd3;
+  --color-urgent-text: #6e2312;
+  --color-urgent-heading: #9a3a1e;
+  --color-soon-stripe: #d99a1e;
+  --color-soon-bg: #f6e6bf;
+  --color-soon-text: #7a4f00;
+  --color-notice-text: #4a3300;
+  --color-nodate-stripe: #c9c2b2;
+}
+
+@layer base {
+  html {
+    background: var(--color-paper);
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  a {
+    color: var(--color-brand);
+  }
+
+  a:hover {
+    color: var(--color-brand-strong);
+  }
+}

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Despensa</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#2F5D3A}a:hover{color:#1F4128}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F6F3EC; color: #1C1F1A; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden; position: relative">
+
+  <header style="padding: 28px 20px 16px; display: flex; flex-direction: column; gap: 4px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #5E6259">FOODMESH · HOGAR</span>
+      <button aria-label="Agregar producto a mano" style="width: 44px; height: 44px; border: 1px solid #D6CFBF; background: #FFFDF8; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1C1F1A" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+    </div>
+    <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -0.02em">Despensa</h1>
+    <p style="margin: 0; font-size: 14px; color: #5E6259">24 productos · <span style="color: #9A3A1E; font-weight: 600">4 vencen esta semana</span></p>
+  </header>
+
+  <div style="padding: 0 20px 14px; display: flex; gap: 8px">
+    <button style="height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid #1C1F1A; background: #1C1F1A; color: #F6F3EC; font-size: 14px; font-weight: 500">Comida <span style="font-family: 'IBM Plex Mono', monospace; opacity: 0.75">18</span></button>
+    <button style="height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid #D6CFBF; background: transparent; color: #1C1F1A; font-size: 14px; font-weight: 500">Otros <span style="font-family: 'IBM Plex Mono', monospace; color: #5E6259">6</span></button>
+  </div>
+
+  <main style="flex: 1; overflow: hidden; padding: 0 20px; display: flex; flex-direction: column; gap: 18px">
+
+    <section style="display: flex; flex-direction: column; gap: 8px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline">
+        <h2 style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #9A3A1E">Úsalo primero</h2>
+        <a href="Recetas.dc.html" style="font-size: 14px; font-weight: 600; text-decoration: none">Ver recetas →</a>
+      </div>
+      <ul style="list-style: none; margin: 0; padding: 0; background: #FFFDF8; border: 1px solid #E2DCCD; border-radius: 12px; overflow: hidden">
+        <li style="display: flex; align-items: center; gap: 12px; padding: 12px 14px 12px 0; border-bottom: 1px solid #EEE9DD">
+          <span style="width: 4px; align-self: stretch; background: #C8472B; border-radius: 0 2px 2px 0"></span>
+          <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 15px; font-weight: 600">Espinaca baby</span>
+            <span style="font-size: 13px; color: #5E6259">Frutas y verduras · <span style="font-family: 'IBM Plex Mono', monospace">200 g</span></span>
+          </div>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: #FFFDF8; background: #B23A1E; padding: 4px 8px; border-radius: 6px">HOY</span>
+        </li>
+        <li style="display: flex; align-items: center; gap: 12px; padding: 12px 14px 12px 0; border-bottom: 1px solid #EEE9DD">
+          <span style="width: 4px; align-self: stretch; background: #D99A1E; border-radius: 0 2px 2px 0"></span>
+          <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 15px; font-weight: 600">Yogur griego natural</span>
+            <span style="font-size: 13px; color: #5E6259">Lácteos · <span style="font-family: 'IBM Plex Mono', monospace">1 und</span></span>
+          </div>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: #7A4F00; background: #F6E6BF; padding: 4px 8px; border-radius: 6px">1 DÍA</span>
+        </li>
+        <li style="display: flex; align-items: center; gap: 12px; padding: 12px 14px 12px 0; border-bottom: 1px solid #EEE9DD">
+          <span style="width: 4px; align-self: stretch; background: #D99A1E; border-radius: 0 2px 2px 0"></span>
+          <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 15px; font-weight: 600">Pechuga de pollo</span>
+            <span style="font-size: 13px; color: #5E6259">Carnes y pescados · <span style="font-family: 'IBM Plex Mono', monospace">0,8 kg</span></span>
+          </div>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: #7A4F00; background: #F6E6BF; padding: 4px 8px; border-radius: 6px">2 DÍAS</span>
+        </li>
+        <li style="display: flex; align-items: center; gap: 12px; padding: 12px 14px 12px 0">
+          <span style="width: 4px; align-self: stretch; background: #D99A1E; border-radius: 0 2px 2px 0"></span>
+          <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 15px; font-weight: 600">Arepas de maíz</span>
+            <span style="font-size: 13px; color: #5E6259">Panadería · <span style="font-family: 'IBM Plex Mono', monospace">5 und</span></span>
+          </div>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: #7A4F00; background: #F6E6BF; padding: 4px 8px; border-radius: 6px">3 DÍAS</span>
+        </li>
+      </ul>
+    </section>
+
+    <section style="display: flex; flex-direction: column; gap: 8px">
+      <h2 style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #5E6259">Más adelante</h2>
+      <ul style="list-style: none; margin: 0; padding: 0; background: #FFFDF8; border: 1px solid #E2DCCD; border-radius: 12px; overflow: hidden">
+        <li style="display: flex; align-items: center; gap: 12px; padding: 12px 14px 12px 0; border-bottom: 1px solid #EEE9DD">
+          <span style="width: 4px; align-self: stretch; background: #2F5D3A; border-radius: 0 2px 2px 0"></span>
+          <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 15px; font-weight: 600">Leche entera</span>
+            <span style="font-size: 13px; color: #5E6259">Lácteos · <span style="font-family: 'IBM Plex Mono', monospace">2 l</span></span>
+          </div>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #3C4038">9 días</span>
+        </li>
+        <li style="display: flex; align-items: center; gap: 12px; padding: 12px 14px 12px 0; border-bottom: 1px solid #EEE9DD">
+          <span style="width: 4px; align-self: stretch; background: #2F5D3A; border-radius: 0 2px 2px 0"></span>
+          <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 15px; font-weight: 600">Arroz blanco</span>
+            <span style="font-size: 13px; color: #5E6259">Granos y cereales · <span style="font-family: 'IBM Plex Mono', monospace">1 kg</span></span>
+          </div>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #3C4038">8 meses</span>
+        </li>
+        <li style="display: flex; align-items: center; gap: 12px; padding: 12px 14px 12px 0">
+          <span style="width: 4px; align-self: stretch; background: #C9C2B2; border-radius: 0 2px 2px 0"></span>
+          <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 15px; font-weight: 600">Tomate chonto</span>
+            <span style="font-size: 13px; color: #5E6259">Frutas y verduras · <span style="font-family: 'IBM Plex Mono', monospace">6 und</span></span>
+          </div>
+          <button style="height: 32px; padding: 0 10px; border: 1px dashed #9C9586; background: transparent; border-radius: 6px; font-size: 13px; color: #3C4038; cursor: pointer">+ Fecha</button>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <nav aria-label="Principal" style="border-top: 1px solid #E2DCCD; background: #FFFDF8; padding: 8px 12px 20px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px">
+    <a href="Despensa.dc.html" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; color: #1C1F1A; font-size: 12px; font-weight: 600">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 10h16M9 6.5h2M9 13.5h2"/></svg>
+      Despensa
+    </a>
+    <a href="Validar.dc.html" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; color: #5E6259; font-size: 12px; font-weight: 500">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5L6 21z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>
+      Facturas
+    </a>
+    <a href="Recetas.dc.html" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; color: #5E6259; font-size: 12px; font-weight: 500">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16a8 8 0 0 1-16 0z"/><path d="M9 4c0 2 2 2 2 4M14 4c0 2 2 2 2 4"/></svg>
+      Recetas
+    </a>
+    <a href="Despensa.dc.html" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; color: #5E6259; font-size: 12px; font-weight: 500">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
+      Hogar
+    </a>
+  </nav>
+
+  <a href="Validar.dc.html" aria-label="Escanear factura" style="position: absolute; right: 20px; bottom: 104px; height: 52px; padding: 0 20px; border-radius: 12px; background: #2F5D3A; color: #FFFDF8; display: flex; align-items: center; gap: 10px; text-decoration: none; font-size: 15px; font-weight: 600; box-shadow: 0 2px 0 #1F4128">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M7 12h10"/></svg>
+    Escanear factura
+  </a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>
