@@ -64,3 +64,10 @@ export function formatFechaCorta(fecha: string): string {
   const mm = String(d.getMonth() + 1).padStart(2, "0");
   return `${dd}/${mm}/${d.getFullYear()}`;
 }
+
+/** Días para vencer en texto corto de recetas: "hoy", "1 día", "3 días". */
+export function textoDiasParaVencer(dias: number): string {
+  if (dias < 0) return "vencido";
+  if (dias === 0) return "hoy";
+  return plural(dias, "día", "días");
+}

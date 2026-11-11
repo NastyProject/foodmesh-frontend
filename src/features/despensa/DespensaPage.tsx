@@ -1,6 +1,6 @@
 import { Plus, ScanLine } from "lucide-react";
-import { useState } from "react";
-import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router";
 import { useInventario, type Item } from "../../api/inventario";
 import { Button } from "../../components/Button";
 import { EmptyState } from "../../components/EmptyState";
@@ -21,7 +21,16 @@ const etiquetaSeccion = "m-0 text-[13px] font-semibold tracking-[0.06em] upperca
 export function DespensaPage() {
   const inventario = useInventario();
   const [pestana, setPestana] = useState<Pestana>("comida");
-  const [sheet, setSheet] = useState<SheetAbierto | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  // "?nuevo=1" (desde Recetas sin alimentos): abrir directo el sheet de crear.
+  const [sheet, setSheet] = useState<SheetAbierto | null>(() =>
+    searchParams.get("nuevo") === "1" ? { modo: "crear" } : null,
+  );
+
+  useEffect(() => {
+    // Quitar el parámetro para que recargar o volver atrás no reabra el sheet.
+    if (searchParams.has("nuevo")) setSearchParams({}, { replace: true });
+  }, [searchParams, setSearchParams]);
 
   const hoy = new Date();
   const items = inventario.data ?? [];

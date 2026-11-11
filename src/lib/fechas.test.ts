@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { diasParaVencer, esUsaloPrimero, estadoVencimiento, formatFechaCorta, parseFechaLocal } from "./fechas";
+import { diasParaVencer, esUsaloPrimero, estadoVencimiento, formatFechaCorta, parseFechaLocal, textoDiasParaVencer } from "./fechas";
 
 // vite.config.ts fija TZ=America/Bogota (UTC-5, sin horario de verano).
 // "Hoy" en los tests: 8 nov 2026, 10:00 hora local.
@@ -87,4 +87,11 @@ describe("formatFechaCorta", () => {
     expect(formatFechaCorta("2026-11-01")).toBe("01/11/2026");
     expect(formatFechaCorta("2027-01-31")).toBe("31/01/2027");
   });
+});
+
+describe("textoDiasParaVencer", () => {
+  it("0 es hoy", () => expect(textoDiasParaVencer(0)).toBe("hoy"));
+  it("1 en singular", () => expect(textoDiasParaVencer(1)).toBe("1 día"));
+  it("N en plural", () => expect(textoDiasParaVencer(3)).toBe("3 días"));
+  it("negativo es vencido", () => expect(textoDiasParaVencer(-2)).toBe("vencido"));
 });
