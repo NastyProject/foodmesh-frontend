@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { CATEGORIAS, esCategoria, etiquetaCategoria } from "./categorias";
+import { CATEGORIAS, esAlimentoCategoria, esCategoria, etiquetaCategoria } from "./categorias";
 
 describe("categorias", () => {
   it("tiene las 15 de la lista cerrada, en orden", () => {
@@ -13,5 +13,12 @@ describe("categorias", () => {
     expect(etiquetaCategoria(null)).toBeNull();
     expect(esCategoria("aseo_hogar")).toBe(true);
     expect(esCategoria("aseo")).toBe(false);
+  });
+
+  it("alimento según la columna de los avisos", () => {
+    const noAlimentos = CATEGORIAS.filter(({ valor }) => !esAlimentoCategoria(valor)).map(({ valor }) => valor);
+    expect(noAlimentos).toEqual(["aseo_hogar", "cuidado_personal", "mascotas"]);
+    expect(esAlimentoCategoria(null)).toBe(true);
+    expect(esAlimentoCategoria("otros")).toBe(true);
   });
 });

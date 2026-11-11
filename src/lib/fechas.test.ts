@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { diasParaVencer, esUsaloPrimero, estadoVencimiento, parseFechaLocal } from "./fechas";
+import { diasParaVencer, esUsaloPrimero, estadoVencimiento, formatFechaCorta, parseFechaLocal } from "./fechas";
 
 // vite.config.ts fija TZ=America/Bogota (UTC-5, sin horario de verano).
 // "Hoy" en los tests: 8 nov 2026, 10:00 hora local.
@@ -79,5 +79,12 @@ describe("esUsaloPrimero", () => {
 
   it("sin fecha no es urgente", () => {
     expect(esUsaloPrimero(null, HOY)).toBe(false);
+  });
+});
+
+describe("formatFechaCorta", () => {
+  it("día/mes/año local, con ceros", () => {
+    expect(formatFechaCorta("2026-11-01")).toBe("01/11/2026");
+    expect(formatFechaCorta("2027-01-31")).toBe("31/01/2027");
   });
 });

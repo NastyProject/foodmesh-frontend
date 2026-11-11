@@ -56,3 +56,11 @@ export function estadoVencimiento(fecha: string | null, hoy: Date = new Date()):
 export function esUsaloPrimero(fecha: string | null, hoy: Date = new Date()): boolean {
   return fecha !== null && diasParaVencer(fecha, hoy) <= DIAS_URGENTE;
 }
+
+/** "2026-11-01" → "01/11/2026". */
+export function formatFechaCorta(fecha: string): string {
+  const d = parseFechaLocal(fecha);
+  const dd = String(d.getDate()).padStart(2, "0");
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  return `${dd}/${mm}/${d.getFullYear()}`;
+}

@@ -32,3 +32,12 @@ export function esCategoria(valor: string): valor is Categoria {
 export function etiquetaCategoria(categoria: Categoria | null | undefined): string | null {
   return categoria ? ETIQUETAS[categoria] : null;
 }
+
+// Columna "¿Alimento?" de la lista cerrada. Solo para agrupar en pantalla mientras se edita
+// algo que el backend todavía no ha visto: al guardar, el backend calcula es_alimento.
+const NO_ALIMENTOS: ReadonlySet<Categoria> = new Set<Categoria>(["aseo_hogar", "cuidado_personal", "mascotas"]);
+
+/** Sin categoría cuenta como alimento, igual que en el backend. */
+export function esAlimentoCategoria(categoria: Categoria | null | undefined): boolean {
+  return !categoria || !NO_ALIMENTOS.has(categoria);
+}
