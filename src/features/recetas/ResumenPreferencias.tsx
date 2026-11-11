@@ -2,6 +2,9 @@ import { Link } from "react-router";
 import { usePreferencias } from "../../api/preferencias";
 import { ETIQUETAS_DIETA } from "../../lib/preferencias";
 
+// Link dentro de una línea de texto: 44px de alto para el dedo sin agrandar la línea.
+const linkTactil = "-my-3 inline-flex min-h-11 items-center font-semibold";
+
 export function ResumenPreferencias() {
   const preferencias = usePreferencias();
 
@@ -17,7 +20,7 @@ export function ResumenPreferencias() {
   if (preferencias.isError) {
     return (
       <p className="m-0 text-[14px]">
-        <Link to="/hogar" className="font-semibold">
+        <Link to="/hogar" className={linkTactil}>
           Editar preferencias
         </Link>
       </p>
@@ -38,7 +41,7 @@ export function ResumenPreferencias() {
         </>
       )}{" "}
       ·{" "}
-      <Link to="/hogar" className="font-semibold">
+      <Link to="/hogar" className={linkTactil}>
         Editar
       </Link>
     </p>

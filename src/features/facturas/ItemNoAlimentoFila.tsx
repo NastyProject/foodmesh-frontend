@@ -23,7 +23,7 @@ export function ItemNoAlimentoFila({ borrador: b, disabled, onEditar }: ItemNoAl
         <span className="text-[13px] text-muted">{etiquetaCategoria(b.categoria || null)} · no se usa en recetas</span>
         {b.revisar && <span className="text-[12px] font-semibold text-notice-text">Revisa cantidad × precio</span>}
       </div>
-      {b.precioTotal !== null && <span className="font-mono text-[14px]">{formatPesos(b.precioTotal)}</span>}
+      {b.precioTotal !== null && <span className="font-mono text-[14px] text-muted">{formatPesos(b.precioTotal)}</span>}
       <button
         type="button"
         aria-label={`Editar ${b.nombre}`}

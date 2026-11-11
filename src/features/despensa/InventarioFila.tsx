@@ -1,6 +1,6 @@
 import type { Item } from "../../api/inventario";
+import { Cantidad } from "../../components/Cantidad";
 import { ExpiryBadge } from "../../components/ExpiryBadge";
-import { textoCantidad } from "../../lib/cantidad";
 import { etiquetaCategoria } from "../../lib/categorias";
 import { estadoVencimiento, type EstadoVencimiento } from "../../lib/fechas";
 
@@ -35,7 +35,7 @@ export function InventarioFila({ item, hoy, onEditar }: InventarioFilaProps) {
           <span className="truncate text-[15px] font-semibold">{item.nombre}</span>
           <span className="text-[13px] text-muted">
             {categoria && <>{categoria} · </>}
-            <span className="font-mono">{textoCantidad(item.cantidad, item.unidad)}</span>
+            <Cantidad cantidad={item.cantidad} unidad={item.unidad} />
           </span>
         </span>
         <ExpiryBadge estado={estado} />

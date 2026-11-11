@@ -1,8 +1,9 @@
 import { Check } from "lucide-react";
 import { useEffect, useRef } from "react";
 import type { Receta } from "../../api/recetas";
+import { Cantidad } from "../../components/Cantidad";
 import { FeedbackReceta } from "./FeedbackReceta";
-import { metaReceta, textoIngrediente } from "./meta";
+import { metaReceta } from "./meta";
 import { PasosReceta } from "./PasosReceta";
 import { UsaPrimero } from "./UsaPrimero";
 
@@ -48,9 +49,8 @@ export function RecetaTarjeta({ receta, enfocar, voto, onVotar, errorVoto, ocupa
           <h3 className={etiqueta}>Ingredientes</h3>
           {tienes.length > 0 && (
             <ul className="m-0 flex list-none flex-col gap-1.5 p-0 text-[14px]">
-              {tienes.map((ing, i) => {
-                const cantidad = textoIngrediente(ing);
-                return (
+              {tienes.map((ing, i) => (
+
                   <li key={`${ing.item_id}-${i}`} className="flex items-center gap-2">
                     <Check
                       size={16}
@@ -60,10 +60,13 @@ export function RecetaTarjeta({ receta, enfocar, voto, onVotar, errorVoto, ocupa
                       className="shrink-0 text-brand"
                     />
                     <span className="flex-1">{ing.nombre}</span>
-                    {cantidad && <span className="font-mono text-muted">{cantidad}</span>}
+                    {ing.cantidad !== null && (
+                      <span className="text-muted">
+                        <Cantidad cantidad={ing.cantidad} unidad={ing.unidad} />
+                      </span>
+                    )}
                   </li>
-                );
-              })}
+              ))}
             </ul>
           )}
           {receta.ingredientes_faltantes.length > 0 && (

@@ -10,9 +10,15 @@ export function formatCantidad(cantidad: number): string {
   return formato.format(cantidad);
 }
 
+/** "und", "paq", "kg". Quita espacios sobrantes (las unidades de facturas pueden traerlos). */
+export function abreviarUnidad(unidad: string): string {
+  const limpia = unidad.trim();
+  return ABREVIATURAS[limpia] ?? limpia;
+}
+
 /** "200 g", "1 und", "0,8 kg". */
 export function textoCantidad(cantidad: number, unidad: string): string {
-  return `${formatCantidad(cantidad)} ${ABREVIATURAS[unidad] ?? unidad}`;
+  return `${formatCantidad(cantidad)} ${abreviarUnidad(unidad)}`;
 }
 
 /** Paso del stepper: de a 100 en gramos y mililitros, de a 1 en el resto. */

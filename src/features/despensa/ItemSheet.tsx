@@ -162,7 +162,7 @@ export function ItemSheet({ item, enfocarFecha = false, onClose }: ItemSheetProp
                 type="button"
                 disabled={ocupado}
                 onClick={() => setFecha("")}
-                className="-my-2 h-10 px-1 text-[14px] font-semibold text-brand hover:text-brand-strong"
+                className="-my-2.5 h-11 px-1 text-[14px] font-semibold text-brand hover:text-brand-strong"
               >
                 Quitar fecha
               </button>

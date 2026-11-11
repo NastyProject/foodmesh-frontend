@@ -3,6 +3,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { usePreferencias } from "../../api/preferencias";
 import { Button } from "../../components/Button";
 import { ErrorState } from "../../components/ErrorState";
+import { PageHeader } from "../../components/PageHeader";
+import { SectionLabel } from "../../components/SectionLabel";
 import { CuentaBloque } from "./CuentaBloque";
 import { HogarSkeleton } from "./HogarSkeleton";
 import { PreferenciasForm } from "./PreferenciasForm";
@@ -20,18 +22,13 @@ export function HogarPage() {
 
   return (
     <>
-      <header className="flex flex-col gap-1 px-5 pt-7 pb-4">
-        <span className="font-mono text-[12px] tracking-[0.08em] text-muted">FOODMESH · HOGAR</span>
-        <h1 className="m-0 text-[32px] leading-tight font-bold tracking-tight">Hogar</h1>
-      </header>
+      <PageHeader title="Hogar" />
 
       <div className="flex flex-col gap-7 px-5 pb-6">
         <CuentaBloque user={user} />
 
         <section aria-labelledby="titulo-preferencias" className="flex flex-col gap-4">
-          <h2 id="titulo-preferencias" className="m-0 text-[13px] font-semibold tracking-[0.06em] text-muted uppercase">
-            Preferencias para recetas
-          </h2>
+          <SectionLabel id="titulo-preferencias">Preferencias para recetas</SectionLabel>
           {preferencias.isPending ? (
             <HogarSkeleton />
           ) : preferencias.isError ? (

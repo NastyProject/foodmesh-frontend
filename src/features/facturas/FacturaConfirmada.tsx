@@ -2,12 +2,11 @@ import { CircleCheck } from "lucide-react";
 import { Link } from "react-router";
 import type { Factura } from "../../api/facturas";
 import { buttonClasses } from "../../components/buttonStyles";
-import { textoCantidad } from "../../lib/cantidad";
+import { Cantidad } from "../../components/Cantidad";
+import { SectionLabel } from "../../components/SectionLabel";
 import { etiquetaCategoria } from "../../lib/categorias";
 import { formatPesos } from "../../lib/dinero";
 import { TiqueteResumen } from "./TiqueteResumen";
-
-const etiquetaSeccion = "m-0 text-[13px] font-semibold tracking-[0.06em] text-muted uppercase";
 
 /** Solo lectura: lo que se confirmó ya vive en la despensa y se edita allá. */
 export function FacturaConfirmada({ factura }: { factura: Factura }) {
@@ -29,9 +28,7 @@ export function FacturaConfirmada({ factura }: { factura: Factura }) {
 
       {items.length > 0 && (
         <section className="mt-1 flex flex-col gap-2" aria-labelledby="leidos">
-          <h2 id="leidos" className={etiquetaSeccion}>
-            Productos que se leyeron
-          </h2>
+          <SectionLabel id="leidos">Productos que se leyeron</SectionLabel>
           <ul className="m-0 list-none overflow-hidden rounded-xl border border-line bg-surface p-0">
             {items.map((item, i) => {
               const categoria = etiquetaCategoria(item.categoria);
@@ -41,7 +38,7 @@ export function FacturaConfirmada({ factura }: { factura: Factura }) {
                     <span className="truncate text-[15px] font-semibold">{item.nombre}</span>
                     <span className="text-[13px] text-muted">
                       {categoria && <>{categoria} · </>}
-                      <span className="font-mono">{textoCantidad(item.cantidad, item.unidad)}</span>
+                      <Cantidad cantidad={item.cantidad} unidad={item.unidad} />
                     </span>
                   </span>
                   {item.precio_total != null && (

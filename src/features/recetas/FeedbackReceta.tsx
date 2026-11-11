@@ -31,7 +31,7 @@ export function FeedbackReceta({ voto, onVotar, error, disabled = false }: Feedb
         </div>
       </div>
       {error && (
-        <p role="alert" className="m-0 text-[13px] text-urgent">
+        <p role="alert" className="m-0 text-[13px] text-urgent-text">
           {error}
         </p>
       )}

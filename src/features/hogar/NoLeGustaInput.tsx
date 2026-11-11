@@ -56,7 +56,7 @@ export function NoLeGustaInput({ id, value, onChange, disabled = false }: NoLeGu
                 aria-label={`Quitar ${item}`}
                 disabled={disabled}
                 onClick={() => quitar(item)}
-                className="flex h-11 w-10 items-center justify-center rounded-[10px] text-muted hover:text-ink disabled:opacity-60"
+                className="flex h-11 w-11 items-center justify-center rounded-[10px] text-muted hover:text-ink disabled:opacity-60"
               >
                 <X size={16} strokeWidth={1.8} aria-hidden="true" />
               </button>

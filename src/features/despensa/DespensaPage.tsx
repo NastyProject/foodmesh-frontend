@@ -5,6 +5,8 @@ import { useInventario, type Item } from "../../api/inventario";
 import { Button } from "../../components/Button";
 import { EmptyState } from "../../components/EmptyState";
 import { ErrorState } from "../../components/ErrorState";
+import { PageHeader } from "../../components/PageHeader";
+import { SectionLabel } from "../../components/SectionLabel";
 import { esUsaloPrimero } from "../../lib/fechas";
 import { EscanearFactura } from "../facturas/EscanearFactura";
 import { DespensaSkeleton } from "./DespensaSkeleton";
@@ -15,8 +17,6 @@ import { PestanaBoton } from "./PestanaBoton";
 type Pestana = "comida" | "otros";
 
 type SheetAbierto = { modo: "crear" } | { modo: "editar"; item: Item; enfocarFecha: boolean };
-
-const etiquetaSeccion = "m-0 text-[13px] font-semibold tracking-[0.06em] uppercase";
 
 export function DespensaPage() {
   const inventario = useInventario();
@@ -50,9 +50,9 @@ export function DespensaPage() {
     <EscanearFactura>
       {(escanear, subiendo) => (
         <>
-          <header className="flex flex-col gap-1 px-5 pt-7 pb-4">
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-[12px] tracking-[0.08em] text-muted">FOODMESH · HOGAR</span>
+          <PageHeader
+            title="Despensa"
+            action={
               <button
                 type="button"
                 aria-label="Agregar producto a mano"
@@ -61,8 +61,8 @@ export function DespensaPage() {
               >
                 <Plus size={20} strokeWidth={1.8} aria-hidden="true" />
               </button>
-            </div>
-            <h1 className="m-0 text-[32px] leading-tight font-bold tracking-tight">Despensa</h1>
+            }
+          >
             {hayItems && (
               <p className="m-0 text-[14px] text-muted">
                 <span className="font-mono">{items.length}</span> {items.length === 1 ? "producto" : "productos"}
@@ -76,7 +76,7 @@ export function DespensaPage() {
                 )}
               </p>
             )}
-          </header>
+          </PageHeader>
 
           {hayItems && (
             <div className="flex gap-2 px-5 pb-2.5">
@@ -85,7 +85,8 @@ export function DespensaPage() {
             </div>
           )}
 
-          <div className={`flex flex-col gap-[18px] px-5 ${hayItems ? "pb-[76px]" : "pb-6"}`}>
+          {/* 96px: alto del botón flotante (52) + su separación de la barra (24) + 20 de aire. */}
+          <div className={`flex flex-col gap-[18px] px-5 ${hayItems ? "pb-[96px]" : "pb-6"}`}>
             {inventario.isPending ? (
               <DespensaSkeleton />
             ) : inventario.isError ? (
@@ -118,11 +119,11 @@ export function DespensaPage() {
                 {usaloPrimero.length > 0 && (
                   <section className="flex flex-col gap-2" aria-labelledby="usalo-primero">
                     <div className="flex items-baseline justify-between">
-                      <h2 id="usalo-primero" className={`${etiquetaSeccion} text-urgent-heading`}>
+                      <SectionLabel id="usalo-primero" tone="urgent">
                         Úsalo primero
-                      </h2>
+                      </SectionLabel>
                       {pestana === "comida" && (
-                        <Link to="/recetas" className="py-2 text-[14px] font-semibold no-underline">
+                        <Link to="/recetas" className="-my-2 flex min-h-11 items-center text-[14px] font-semibold no-underline">
                           Ver recetas →
                         </Link>
                       )}
@@ -132,9 +133,7 @@ export function DespensaPage() {
                 )}
                 {masAdelante.length > 0 && (
                   <section className="flex flex-col gap-2" aria-labelledby="mas-adelante">
-                    <h2 id="mas-adelante" className={`${etiquetaSeccion} text-muted`}>
-                      Más adelante
-                    </h2>
+                    <SectionLabel id="mas-adelante">Más adelante</SectionLabel>
                     <InventarioLista items={masAdelante} hoy={hoy} onEditar={abrirEditar} />
                   </section>
                 )}

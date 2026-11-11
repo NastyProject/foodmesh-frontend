@@ -3,11 +3,11 @@ import { useFacturas } from "../../api/facturas";
 import { Button } from "../../components/Button";
 import { EmptyState } from "../../components/EmptyState";
 import { ErrorState } from "../../components/ErrorState";
+import { PageHeader } from "../../components/PageHeader";
+import { SectionLabel } from "../../components/SectionLabel";
 import { EscanearFactura } from "./EscanearFactura";
 import { FacturaFila } from "./FacturaFila";
 import { FacturasSkeleton } from "./FacturasSkeleton";
-
-const etiquetaSeccion = "m-0 text-[13px] font-semibold tracking-[0.06em] text-muted uppercase";
 
 export function FacturasPage() {
   const facturas = useFacturas();
@@ -18,11 +18,7 @@ export function FacturasPage() {
     <EscanearFactura>
       {(escanear, subiendo) => (
         <>
-          <header className="flex flex-col gap-1 px-5 pt-7 pb-4">
-            <span className="flex h-11 items-center font-mono text-[12px] tracking-[0.08em] text-muted">
-              FOODMESH · HOGAR
-            </span>
-            <h1 className="m-0 text-[32px] leading-tight font-bold tracking-tight">Facturas</h1>
+          <PageHeader title="Facturas">
             {facturas.isSuccess && lista.length > 0 && (
               <p className="m-0 text-[14px] text-muted">
                 <span className="font-mono">{lista.length}</span> {lista.length === 1 ? "factura" : "facturas"}
@@ -36,7 +32,7 @@ export function FacturasPage() {
                 )}
               </p>
             )}
-          </header>
+          </PageHeader>
 
           <div className="flex flex-col gap-[18px] px-5 pb-6">
             {!(facturas.isSuccess && lista.length === 0) && (
@@ -66,9 +62,7 @@ export function FacturasPage() {
               </EmptyState>
             ) : (
               <section className="flex flex-col gap-2" aria-labelledby="historial">
-                <h2 id="historial" className={etiquetaSeccion}>
-                  Historial
-                </h2>
+                <SectionLabel id="historial">Historial</SectionLabel>
                 <ul className="m-0 list-none overflow-hidden rounded-xl border border-line bg-surface p-0">
                   {lista.map((f) => (
                     <FacturaFila key={f.id} factura={f} />

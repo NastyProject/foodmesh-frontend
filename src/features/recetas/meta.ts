@@ -1,5 +1,4 @@
-import type { Ingrediente, Receta } from "../../api/recetas";
-import { formatCantidad, textoCantidad } from "../../lib/cantidad";
+import type { Receta } from "../../api/recetas";
 
 /** "20 MIN · 2 PORCIONES". */
 export function metaReceta(receta: Receta): string {
@@ -11,11 +10,4 @@ export function metaReceta(receta: Receta): string {
 export function metaCompacta(receta: Receta): string {
   const tienes = receta.ingredientes.filter((i) => i.item_id !== null).length;
   return `${receta.tiempo_minutos} MIN · TIENES ${tienes} DE ${receta.ingredientes.length}`;
-}
-
-/** Cantidad del ingrediente para mostrar a la derecha, o null si la IA no la dio. */
-export function textoIngrediente(ingrediente: Ingrediente): string | null {
-  if (ingrediente.cantidad === null) return null;
-  if (!ingrediente.unidad) return formatCantidad(ingrediente.cantidad);
-  return textoCantidad(ingrediente.cantidad, ingrediente.unidad);
 }

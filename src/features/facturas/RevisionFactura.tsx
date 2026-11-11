@@ -6,6 +6,7 @@ import { ApiError } from "../../api/client";
 import { useConfirmarFactura, type Factura } from "../../api/facturas";
 import { useOcultarBarraInferior } from "../../components/barraInferior";
 import { Button } from "../../components/Button";
+import { SectionLabel } from "../../components/SectionLabel";
 import { AvisoFactura } from "./AvisoFactura";
 import {
   aItemFactura,
@@ -25,8 +26,6 @@ interface ErrorConfirmar {
   mensaje: string;
   yaConfirmada: boolean;
 }
-
-const etiquetaSeccion = "m-0 text-[13px] font-semibold tracking-[0.06em] text-muted uppercase";
 
 /**
  * Revisión de una factura pendiente o con error. Lo editado vive aquí hasta confirmar
@@ -97,9 +96,9 @@ export function RevisionFactura({ factura }: { factura: Factura }) {
 
         <section className="mt-1 flex flex-col gap-3.5" aria-labelledby={`${idBase}-productos`}>
           <div className="flex items-baseline justify-between">
-            <h2 id={`${idBase}-productos`} className={etiquetaSeccion}>
+            <SectionLabel id={`${idBase}-productos`}>
               {factura.estado === "error" ? "Productos" : "Productos detectados"}
-            </h2>
+            </SectionLabel>
             <span className="font-mono text-[13px] text-muted">{n}</span>
           </div>
 

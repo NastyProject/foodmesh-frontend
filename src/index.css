@@ -26,6 +26,34 @@
   --color-soon-text: #7a4f00;
   --color-notice-text: #4a3300;
   --color-nodate-stripe: #c9c2b2;
+
+  /* Bienvenida: el tiquete sale de la impresora (0–400ms) y luego aparece la receta (300–600ms).
+     Se usan con motion-safe: con "reducir movimiento" no hay animación. Animan `translate`,
+     no `transform`, para no pisar la rotación (`rotate-*` usa su propia propiedad). */
+  --animate-imprimir: imprimir 400ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+  --animate-aparecer: aparecer 300ms ease-out 300ms both;
+
+  @keyframes imprimir {
+    from {
+      opacity: 0;
+      translate: 0 24px;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+
+  @keyframes aparecer {
+    from {
+      opacity: 0;
+      translate: 0 8px;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
 }
 
 @layer base {

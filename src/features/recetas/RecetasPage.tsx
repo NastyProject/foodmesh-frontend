@@ -6,6 +6,7 @@ import { Button } from "../../components/Button";
 import { buttonClasses } from "../../components/buttonStyles";
 import { EmptyState } from "../../components/EmptyState";
 import { ErrorState } from "../../components/ErrorState";
+import { PageHeader } from "../../components/PageHeader";
 import { EscanearFactura } from "../facturas/EscanearFactura";
 import { AvisoRecetas } from "./AvisoRecetas";
 import { RecetasLista } from "./RecetasLista";
@@ -31,7 +32,7 @@ export function RecetasPage() {
   );
 
   const errorOtras = otras.isError && !otras.isPending && (
-    <p role="alert" className="m-0 text-[14px] text-urgent">
+    <p role="alert" className="m-0 text-[14px] text-urgent-text">
       {otras.error.message}
     </p>
   );
@@ -86,11 +87,9 @@ export function RecetasPage() {
     <EscanearFactura>
       {(escanear, subiendo) => (
         <>
-          <header className="flex flex-col gap-1 px-5 pt-7 pb-3.5">
-            <span className="font-mono text-[12px] tracking-[0.08em] text-muted">CON LO QUE TIENES</span>
-            <h1 className="m-0 text-[32px] leading-tight font-bold tracking-tight">Recetas</h1>
+          <PageHeader title="Recetas" eyebrow="CON LO QUE TIENES">
             <ResumenPreferencias />
-          </header>
+          </PageHeader>
           <div className="flex flex-col gap-3 px-5 pb-6">{contenido(escanear, subiendo)}</div>
         </>
       )}

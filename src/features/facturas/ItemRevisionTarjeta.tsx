@@ -78,10 +78,11 @@ export function ItemRevisionTarjeta({ borrador: b, idBase, disabled, onCambiar, 
           />
         </div>
         {b.precioTotal !== null && (
-          <div className="flex flex-col items-end pt-[30px] font-mono">
+          // Solo de referencia: el precio no se guarda ni se edita, por eso va apagado.
+          <div className="flex flex-col items-end pt-[30px] font-mono text-muted">
             <span className="text-[14px]">{formatPesos(b.precioTotal)}</span>
             {b.revisar && b.precioUnitario !== null && (
-              <span className="text-[12px] whitespace-nowrap text-muted">
+              <span className="text-[12px] whitespace-nowrap">
                 {cantidadActual === null ? "?" : formatCantidad(cantidadActual)} × {formatPesos(b.precioUnitario)}
               </span>
             )}

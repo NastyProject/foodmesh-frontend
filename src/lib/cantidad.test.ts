@@ -12,6 +12,11 @@ describe("textoCantidad", () => {
   it("deja tal cual las unidades que no conoce", () => {
     expect(textoCantidad(2, "taza")).toBe("2 taza");
   });
+
+  it("no duplica espacios si la unidad trae espacios de más", () => {
+    expect(textoCantidad(1, " unidad ")).toBe("1 und");
+    expect(textoCantidad(2, "kg ")).toBe("2 kg");
+  });
 });
 
 describe("parseCantidad", () => {
