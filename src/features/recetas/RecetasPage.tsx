@@ -44,7 +44,7 @@ export function RecetasPage() {
       const { error } = recetas;
       if (error instanceof ApiError && error.status === 409) {
         return (
-          <EmptyState title="Aún no hay comida para cocinar" text={error.detail}>
+          <EmptyState title="Aún no hay comida para cocinar" text={error.message}>
             <Button className="w-full" onClick={escanear} disabled={subiendo}>
               <ScanLine size={20} strokeWidth={1.8} aria-hidden="true" />
               Escanear factura
