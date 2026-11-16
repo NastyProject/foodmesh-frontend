@@ -68,3 +68,31 @@ export function useConfirmarFactura(id: number) {
     },
   });
 }
+
+/**
+ * Vuelve a leer la factura enviando la foto completa a la IA. Solo con permiso explícito del
+ * usuario: el backend exige `acepto_enviar_imagen: true`. Reemplaza los items_detectados.
+ */
+export function useReprocesarConImagen(id: number) {
+  const getToken = useApiToken();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: () =>
+      apiFetch<Factura>(`/facturas/${id}/reprocesar-con-imagen`, {
+        getToken,
+        method: "POST",
+        body: { acepto_enviar_imagen: true },
+      }),
+    onSuccess: (factura) => {
+      queryClient.setQueryData(facturaKey(id), factura);
+      // El historial muestra totales y estado, que cambian con la nueva lectura.
+      void queryClient.invalidateQueries({ queryKey: facturasKey, exact: true });
+    },
+    onError: (error) => {
+      // 409: ya confirmada o sin imagen. 404: ya no existe. Que la pantalla se entere.
+      if (error instanceof ApiError && (error.status === 409 || error.status === 404)) {
+        void queryClient.invalidateQueries({ queryKey: facturaKey(id) });
+      }
+    },
+  });
+}

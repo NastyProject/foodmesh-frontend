@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { diasParaVencer, esUsaloPrimero, estadoVencimiento, formatFechaCorta, parseFechaLocal, textoDiasParaVencer } from "./fechas";
+import { diasParaVencer, esUsaloPrimero, estadoVencimiento, fechaISOLocal, formatDiaMes, formatFechaCorta, parseFechaLocal, textoDiasParaVencer } from "./fechas";
 
 // vite.config.ts fija TZ=America/Bogota (UTC-5, sin horario de verano).
 // "Hoy" en los tests: 8 nov 2026, 10:00 hora local.
@@ -94,4 +94,19 @@ describe("textoDiasParaVencer", () => {
   it("1 en singular", () => expect(textoDiasParaVencer(1)).toBe("1 día"));
   it("N en plural", () => expect(textoDiasParaVencer(3)).toBe("3 días"));
   it("negativo es vencido", () => expect(textoDiasParaVencer(-2)).toBe("vencido"));
+});
+
+describe("formatDiaMes", () => {
+  it("usa el día local de Bogotá", () => {
+    expect(formatDiaMes("2026-11-11T16:30:00Z")).toBe("11 nov");
+    // 02:00 UTC del 12 es todavía el 11 en Bogotá.
+    expect(formatDiaMes("2026-11-12T02:00:00Z")).toBe("11 nov");
+    expect(formatDiaMes("2026-01-05T15:00:00Z")).toBe("5 ene");
+  });
+});
+
+describe("fechaISOLocal", () => {
+  it("rellena con ceros", () => {
+    expect(fechaISOLocal(new Date(2026, 0, 5, 23, 30))).toBe("2026-01-05");
+  });
 });

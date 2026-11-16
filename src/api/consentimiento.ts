@@ -29,3 +29,28 @@ export function useGuardarConsentimiento() {
     },
   });
 }
+
+/**
+ * Revoca el consentimiento: `acepta_tratamiento: false`. Desde ahí el backend responde 403 en
+ * todo lo del hogar hasta que se acepte de nuevo. Se borran de la caché los datos del hogar.
+ */
+export function useRevocarConsentimiento() {
+  const getToken = useApiToken();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (versionVigente: string) =>
+      apiFetch<Consentimiento>("/consentimiento", {
+        getToken,
+        method: "POST",
+        body: {
+          acepta_tratamiento: false,
+          acepta_analitica_agregada: false,
+          version_politica: versionVigente,
+        } satisfies ConsentimientoIn,
+      }),
+    onSuccess: (guardado) => {
+      queryClient.removeQueries({ predicate: (q) => q.queryKey[0] !== consentimientoKey[0] });
+      queryClient.setQueryData(consentimientoKey, guardado);
+    },
+  });
+}
