@@ -8,6 +8,7 @@ import { SectionLabel } from "../../components/SectionLabel";
 import { CuentaBloque } from "./CuentaBloque";
 import { HogarSkeleton } from "./HogarSkeleton";
 import { PreferenciasForm } from "./PreferenciasForm";
+import { PrivacidadBloque } from "./PrivacidadBloque";
 
 export function HogarPage() {
   const { user, logout } = useAuth0();
@@ -42,6 +43,8 @@ export function HogarPage() {
             <PreferenciasForm key="preferencias" inicial={preferencias.data} />
           )}
         </section>
+
+        <PrivacidadBloque />
 
         <Button variant="secondary" className="w-full" onClick={cerrarSesion}>
           Cerrar sesión

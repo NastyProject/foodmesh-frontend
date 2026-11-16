@@ -71,3 +71,18 @@ export function textoDiasParaVencer(dias: number): string {
   if (dias === 0) return "hoy";
   return plural(dias, "día", "días");
 }
+
+const MESES_CORTOS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+
+/** Instante ISO ("2026-11-11T16:30:00Z") → "11 nov", en el día local. */
+export function formatDiaMes(instante: string): string {
+  const d = new Date(instante);
+  return `${d.getDate()} ${MESES_CORTOS[d.getMonth()] ?? ""}`;
+}
+
+/** Fecha local como "YYYY-MM-DD" (para nombres de archivo). */
+export function fechaISOLocal(d: Date = new Date()): string {
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${d.getFullYear()}-${mm}-${dd}`;
+}

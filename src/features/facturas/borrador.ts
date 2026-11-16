@@ -17,6 +17,10 @@ export interface Borrador {
   precioTotal: number | null;
   precioUnitario: number | null;
   revisar: boolean;
+  /** Descripción tal como está impresa en la factura, solo para mostrar. */
+  descripcionImpresa: string | null;
+  /** Parte del nombre era ilegible (viene con "…"): hay que pedir que lo complete. */
+  nombreIncierto: boolean;
   /** `es_alimento` del backend mientras no se toque la categoría; `null` si hay que deducirlo. */
   esAlimentoBackend: boolean | null;
   /** Los no alimentos se muestran colapsados hasta que el usuario los abre. */
@@ -38,6 +42,8 @@ function desdePropuesto(item: ItemPropuesto): Borrador {
     precioTotal: item.precio_total ?? null,
     precioUnitario: item.precio_unitario ?? null,
     revisar: item.revisar,
+    descripcionImpresa: item.descripcion_impresa?.trim() || null,
+    nombreIncierto: item.nombre_incierto,
     esAlimentoBackend: item.es_alimento,
     expandido: false,
   };
@@ -55,6 +61,8 @@ export function borradorVacio(): Borrador {
     precioTotal: null,
     precioUnitario: null,
     revisar: false,
+    descripcionImpresa: null,
+    nombreIncierto: false,
     esAlimentoBackend: null,
     expandido: true,
   };
@@ -96,7 +104,12 @@ export function validar(lista: readonly Borrador[]): { key: string; campo: "nomb
   return null;
 }
 
-/** Lo único que se manda al confirmar (ni precios, ni origen, ni revisar, ni es_alimento). Llamar tras validar(). */
+/** Renglón a revisar: números que no cuadran o nombre incompleto. Mismo estilo en ambos casos. */
+export function requiereAtencion(b: Borrador): boolean {
+  return b.revisar || b.nombreIncierto;
+}
+
+/** Lo único que se manda al confirmar (ni precios, ni origen, ni revisar, ni nombre_incierto, ni descripcion_impresa, ni es_alimento). Llamar tras validar(). */
 export function aItemFactura(b: Borrador): ItemFactura {
   return {
     nombre: b.nombre.trim(),

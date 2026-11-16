@@ -19,6 +19,9 @@ export function TiqueteResumen({ factura }: { factura: Factura }) {
         </span>
         <span className="text-muted">{factura.fecha_compra ? formatFechaCorta(factura.fecha_compra) : "Sin fecha"}</span>
       </div>
+      {factura.metodo === "vision" && (
+        <span className="-mt-1 text-[11px] tracking-[0.08em] text-muted uppercase">Leída con la imagen</span>
+      )}
       <div className="border-t border-dashed border-line-strong" />
       <div className="grid grid-cols-2 gap-2">
         {[

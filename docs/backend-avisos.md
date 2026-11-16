@@ -465,7 +465,7 @@ El body es **opcional**:
       "usa_proximos_a_vencer": [
         { "item_id": 7, "nombre": "Arroz blanco", "dias_para_vencer": 1 }
       ],
-      "ingredientes_faltantes": ["Cebolla larga", "Sal"]
+      "ingredientes_faltantes": ["Cebolla larga: 1 unidad", "Sal"]
     }
   ],
   "aviso": "Verifica siempre los ingredientes si tienes alergias: las recetas son generadas por IA.",
@@ -482,7 +482,7 @@ El body es **opcional**:
 | `mensaje` | `null` si hay recetas. Si `recetas` viene vacía, trae una explicación lista para mostrar | Con lista vacía: mostrar el `mensaje` (no es un error, llega con `201`) y los botones "Otras recetas" y "Editar preferencias" |
 | `ingredientes[].item_id` | Id del ítem del inventario que usa, o `null` si hay que comprarlo (o es un básico como sal o aceite) | Marcar con ✓ "lo tienes" los que tienen `item_id` |
 | `usa_proximos_a_vencer` | Ítems del inventario que vencen en 3 días o menos y que la receta usa | **Destacarlo** en la tarjeta ("🕒 Usa: Arroz blanco, vence mañana"). Es el punto central de la app |
-| `ingredientes_faltantes` | Nombres de los ingredientes con `item_id: null` | Una sección "Te falta" |
+| `ingredientes_faltantes` | Un texto por ingrediente con `item_id: null`, con la cantidad: `"Nombre: cantidad unidad"` (ej. `"Cebolla larga: 1 tallo"`). Si el ingrediente no trae cantidad, solo el nombre (`"Sal"`) | Una sección "Te falta": mostrar cada texto tal cual |
 | `por_que` | Explicación de la IA de por qué la receta aprovecha lo que está por vencer | Debajo del título |
 | `aviso` | Texto fijo de seguridad | **Mostrarlo siempre**, visible, en la pantalla de recetas |
 | `recomendacion_id` | Id de esta sugerencia | Guárdalo para el feedback |

@@ -1,7 +1,7 @@
 import { Pencil } from "lucide-react";
 import { etiquetaCategoria } from "../../lib/categorias";
 import { formatPesos } from "../../lib/dinero";
-import type { Borrador } from "./borrador";
+import { requiereAtencion, type Borrador } from "./borrador";
 
 interface ItemNoAlimentoFilaProps {
   borrador: Borrador;
@@ -15,12 +15,19 @@ export function ItemNoAlimentoFila({ borrador: b, disabled, onEditar }: ItemNoAl
     <article
       aria-label={b.nombre}
       className={`flex items-center gap-2.5 rounded-xl bg-sunken py-3 pr-1.5 pl-3.5 ${
-        b.revisar ? "border-2 border-soon-stripe" : "border border-line"
+        requiereAtencion(b) ? "border-2 border-soon-stripe" : "border border-line"
       }`}
     >
       <div className="flex min-w-0 flex-1 flex-col gap-0.5">
         <span className="truncate text-[15px] font-semibold">{b.nombre}</span>
+        {b.descripcionImpresa && (
+          <span className="truncate font-mono text-[13px] text-muted">
+            <span className="sr-only">En la factura: </span>
+            {b.descripcionImpresa}
+          </span>
+        )}
         <span className="text-[13px] text-muted">{etiquetaCategoria(b.categoria || null)} · no se usa en recetas</span>
+        {b.nombreIncierto && <span className="text-[12px] font-semibold text-notice-text">Revisa el nombre</span>}
         {b.revisar && <span className="text-[12px] font-semibold text-notice-text">Revisa cantidad × precio</span>}
       </div>
       {b.precioTotal !== null && <span className="font-mono text-[14px] text-muted">{formatPesos(b.precioTotal)}</span>}

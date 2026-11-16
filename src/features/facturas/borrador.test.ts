@@ -1,6 +1,15 @@
 import { describe, expect, it } from "vitest";
 import type { ItemPropuesto } from "../../api/facturas";
-import { aItemFactura, type Borrador, borradorVacio, crearBorradores, esAlimento, insertarNuevo, validar } from "./borrador";
+import {
+  aItemFactura,
+  type Borrador,
+  borradorVacio,
+  crearBorradores,
+  esAlimento,
+  insertarNuevo,
+  requiereAtencion,
+  validar,
+} from "./borrador";
 
 const base: ItemPropuesto = {
   codigo: "7700304928750",
@@ -58,5 +67,26 @@ describe("borrador de la revisión", () => {
       codigo: "7700304928750",
     });
     expect(aItemFactura({ ...borradorVacio(), nombre: "Pan" })).toMatchObject({ categoria: null, fecha_vencimiento: null, codigo: null });
+  });
+
+  it("conserva descripcion_impresa y nombre_incierto solo para mostrar", () => {
+    const b = primero(
+      crearBorradores([{ ...base, nombre: "Huevos de c…", descripcion_impresa: " HUEVO COD X12 ", nombre_incierto: true }]),
+    );
+    expect(b.descripcionImpresa).toBe("HUEVO COD X12");
+    expect(b.nombreIncierto).toBe(true);
+    expect(requiereAtencion(b)).toBe(true);
+    expect(aItemFactura({ ...b, nombre: "Huevos de codorniz" })).not.toHaveProperty("descripcion_impresa");
+    expect(aItemFactura(b)).not.toHaveProperty("nombre_incierto");
+  });
+
+  it("descripción vacía o ausente queda en null", () => {
+    expect(primero(crearBorradores([{ ...base, descripcion_impresa: "  " }])).descripcionImpresa).toBeNull();
+    expect(primero(crearBorradores([base])).descripcionImpresa).toBeNull();
+  });
+
+  it("requiere atención si revisar o nombre incierto", () => {
+    expect(requiereAtencion(borradorVacio())).toBe(false);
+    expect(requiereAtencion({ ...borradorVacio(), revisar: true })).toBe(true);
   });
 });

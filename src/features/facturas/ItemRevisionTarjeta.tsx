@@ -4,7 +4,7 @@ import { Stepper } from "../../components/Stepper";
 import { formatCantidad, parseCantidad, pasoCantidad, UNIDADES } from "../../lib/cantidad";
 import { CATEGORIAS, esCategoria, etiquetaCategoria } from "../../lib/categorias";
 import { formatPesos } from "../../lib/dinero";
-import { esAlimento, idCampo, type Borrador } from "./borrador";
+import { esAlimento, idCampo, requiereAtencion, type Borrador } from "./borrador";
 
 interface ItemRevisionTarjetaProps {
   borrador: Borrador;
@@ -35,17 +35,19 @@ export function ItemRevisionTarjeta({ borrador: b, idBase, disabled, onCambiar, 
     ? UNIDADES
     : [...UNIDADES, b.unidad];
 
-  const marco = b.revisar ? "border-2 border-soon-stripe p-[13px]" : "border border-line p-3.5";
+  const idDescripcion = `${idBase}-${b.key}-impresa`;
+  const marco = requiereAtencion(b) ? "border-2 border-soon-stripe p-[13px]" : "border border-line p-3.5";
 
   return (
     <article
       aria-label={b.nombre.trim() || "Producto nuevo"}
       className={`flex flex-col gap-2.5 rounded-xl ${alimento ? "bg-surface" : "bg-sunken"} ${marco}`}
     >
-      {b.revisar && (
-        <span className="self-start rounded-[6px] bg-soon-bg px-2 py-[3px] text-[12px] font-semibold text-notice-text">
-          Revisa cantidad × precio
-        </span>
+      {requiereAtencion(b) && (
+        <div className="flex flex-wrap gap-1.5">
+          {b.nombreIncierto && <EtiquetaRevisar>Revisa el nombre</EtiquetaRevisar>}
+          {b.revisar && <EtiquetaRevisar>Revisa cantidad × precio</EtiquetaRevisar>}
+        </div>
       )}
       {!alimento && (
         <div className="flex items-center justify-between gap-2">
@@ -74,8 +76,15 @@ export function ItemRevisionTarjeta({ borrador: b, idBase, disabled, onCambiar, 
             className={`${campo} border-line-strong bg-surface font-semibold placeholder:font-normal placeholder:text-muted`}
             value={b.nombre}
             disabled={disabled}
+            aria-describedby={b.descripcionImpresa ? idDescripcion : undefined}
             onChange={(e) => onCambiar({ nombre: e.target.value })}
           />
+          {b.descripcionImpresa && (
+            <span id={idDescripcion} className="font-mono text-[13px] break-words text-muted">
+              <span className="sr-only">En la factura: </span>
+              {b.descripcionImpresa}
+            </span>
+          )}
         </div>
         {b.precioTotal !== null && (
           // Solo de referencia: el precio no se guarda ni se edita, por eso va apagado.
@@ -169,5 +178,11 @@ export function ItemRevisionTarjeta({ borrador: b, idBase, disabled, onCambiar, 
         </button>
       </div>
     </article>
+  );
+}
+
+function EtiquetaRevisar({ children }: { children: string }) {
+  return (
+    <span className="rounded-[6px] bg-soon-bg px-2 py-[3px] text-[12px] font-semibold text-notice-text">{children}</span>
   );
 }

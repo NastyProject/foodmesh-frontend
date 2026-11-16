@@ -1,28 +1,30 @@
 import { TriangleAlert } from "lucide-react";
 import type { Factura } from "../../api/facturas";
-import { formatPesos } from "../../lib/dinero";
+import { avisosFactura } from "./avisos";
 
-function texto(factura: Factura): string | null {
-  if (factura.estado === "error") {
-    const motivo = factura.error?.trim() || "No pudimos leer los productos de esta factura.";
-    return `${motivo} Agrega los productos a mano y confirma.`;
-  }
-  if (!factura.requiere_revision) return null;
-  const { total_impreso: impreso, total_calculado: detectado } = factura;
-  if (impreso === null || detectado === null) {
-    return "No pudimos comparar los totales: revisa que no falte ningún producto.";
-  }
-  return `El total no coincide (impreso ${formatPesos(impreso)}, detectado ${formatPesos(detectado)}): revisa que no falte ningún producto.`;
-}
-
-/** Aviso ámbar sobre la lista: factura con error o totales que no cuadran. */
+/** Avisos ámbar sobre la lista: factura con error, totales que no cuadran, líneas descartadas. */
 export function AvisoFactura({ factura }: { factura: Factura }) {
-  const mensaje = texto(factura);
-  if (!mensaje) return null;
+  const avisos = avisosFactura(factura);
+  if (avisos.length === 0) return null;
   return (
-    <div role="status" className="flex items-start gap-2.5 rounded-[10px] bg-soon-bg px-3.5 py-3 text-[14px] text-notice-text">
-      <TriangleAlert size={18} strokeWidth={1.8} aria-hidden="true" className="mt-px shrink-0" />
-      <span>{mensaje}</span>
+    <div className="flex flex-col gap-2">
+      {avisos.map((aviso) => (
+        <div
+          key={aviso.clave}
+          role="status"
+          className="flex items-start gap-2.5 rounded-[10px] bg-soon-bg px-3.5 py-3 text-[14px] text-notice-text"
+        >
+          <TriangleAlert size={18} strokeWidth={1.8} aria-hidden="true" className="mt-px shrink-0" />
+          {aviso.tipo === "texto" ? (
+            <span>{aviso.texto}</span>
+          ) : (
+            <span>
+              Descartamos <span className="font-mono font-semibold">{aviso.n}</span>{" "}
+              {aviso.n === 1 ? "línea que no pudimos confirmar" : "líneas que no pudimos confirmar"} en la factura.
+            </span>
+          )}
+        </div>
+      ))}
     </div>
   );
 }

@@ -1,13 +1,14 @@
-import { Plus } from "lucide-react";
+import { Image, Plus } from "lucide-react";
 import { useId, useState } from "react";
 import { flushSync } from "react-dom";
 import { Link, useNavigate } from "react-router";
 import { ApiError } from "../../api/client";
-import { useConfirmarFactura, type Factura } from "../../api/facturas";
+import { useConfirmarFactura, useReprocesarConImagen, type Factura } from "../../api/facturas";
 import { useOcultarBarraInferior } from "../../components/barraInferior";
 import { Button } from "../../components/Button";
 import { SectionLabel } from "../../components/SectionLabel";
 import { AvisoFactura } from "./AvisoFactura";
+import { puedeReprocesar } from "./avisos";
 import {
   aItemFactura,
   borradorVacio,
@@ -20,6 +21,8 @@ import {
 } from "./borrador";
 import { ItemNoAlimentoFila } from "./ItemNoAlimentoFila";
 import { ItemRevisionTarjeta } from "./ItemRevisionTarjeta";
+import { LeyendoFactura } from "./LeyendoFactura";
+import { ReprocesarSheet } from "./ReprocesarSheet";
 import { TiqueteResumen } from "./TiqueteResumen";
 
 interface ErrorConfirmar {
@@ -37,8 +40,10 @@ export function RevisionFactura({ factura }: { factura: Factura }) {
   const navigate = useNavigate();
   const confirmar = useConfirmarFactura(factura.id);
   const [borradores, setBorradores] = useState(() => crearBorradores(factura.items_detectados));
+  const reprocesar = useReprocesarConImagen(factura.id);
   const [error, setError] = useState<ErrorConfirmar | null>(null);
-  const ocupado = confirmar.isPending;
+  const [pidiendoPermiso, setPidiendoPermiso] = useState(false);
+  const ocupado = confirmar.isPending || reprocesar.isPending;
 
   const alimentos = borradores.filter(esAlimento);
   const sinFecha = alimentos.filter((b) => !b.fecha).length;
@@ -88,11 +93,37 @@ export function RevisionFactura({ factura }: { factura: Factura }) {
     });
   }
 
+  function releerConImagen() {
+    setPidiendoPermiso(false);
+    setError(null);
+    reprocesar.mutate(undefined, {
+      // La factura nueva ya está en caché (el encabezado y los avisos se actualizan solos);
+      // el borrador se arma de nuevo con los ítems de la nueva lectura.
+      onSuccess: (nueva) => {
+        setBorradores(crearBorradores(nueva.items_detectados));
+        window.scrollTo({ top: 0 });
+      },
+      // 409 (sin imagen o ya confirmada), 503 (la IA no respondió): el borrador queda igual.
+      onError: (e) => setError({ mensaje: e.message, yaConfirmada: false }),
+    });
+  }
+
   return (
     <>
       <div className="flex flex-col gap-3.5 px-5 pb-[calc(190px+env(safe-area-inset-bottom))]">
         <TiqueteResumen factura={factura} />
         <AvisoFactura factura={factura} />
+        {puedeReprocesar(factura) && (
+          <Button
+            variant="secondary"
+            className="h-12 w-full rounded-[10px] text-[15px]"
+            disabled={ocupado}
+            onClick={() => setPidiendoPermiso(true)}
+          >
+            <Image size={18} strokeWidth={1.8} aria-hidden="true" />
+            Reintentar con la imagen
+          </Button>
+        )}
 
         <section className="mt-1 flex flex-col gap-3.5" aria-labelledby={`${idBase}-productos`}>
           <div className="flex items-baseline justify-between">
@@ -159,6 +190,9 @@ export function RevisionFactura({ factura }: { factura: Factura }) {
           {ocupado ? "Confirmando…" : `Confirmar ${n} ${n === 1 ? "producto" : "productos"}`}
         </Button>
       </footer>
+
+      {pidiendoPermiso && <ReprocesarSheet onAceptar={releerConImagen} onClose={() => setPidiendoPermiso(false)} />}
+      {reprocesar.isPending && <LeyendoFactura titulo="Leyendo la imagen…" />}
     </>
   );
 }
