@@ -13,7 +13,7 @@
     "lint": "eslint .",
     "typecheck": "tsc -b --noEmit",
     "test": "vitest run",
-    "gen:api": "openapi-typescript http://localhost:8000/openapi.json -o src/api/schema.d.ts"
+    "gen:api": "openapi-typescript http://localhost:8001/openapi.json -o src/api/schema.d.ts"
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.30.0",

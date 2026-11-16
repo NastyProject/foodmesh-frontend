@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import { AuthGate } from "./auth/AuthGate";
 import { AppLayout } from "./components/AppLayout";
 import { WelcomePage } from "./features/bienvenida/WelcomePage";
+import { ConsentimientoPage } from "./features/consentimiento/ConsentimientoPage";
 import { DespensaPage } from "./features/despensa/DespensaPage";
 import { FacturasPage } from "./features/facturas/FacturasPage";
 import { RevisarFacturaPage } from "./features/facturas/RevisarFacturaPage";
@@ -14,6 +15,8 @@ export const router = createBrowserRouter([
   {
     element: <AuthGate />,
     children: [
+      // Fuera del layout: sin barra inferior hasta aceptar.
+      { path: "consentimiento", element: <ConsentimientoPage /> },
       {
         element: <AppLayout />,
         children: [

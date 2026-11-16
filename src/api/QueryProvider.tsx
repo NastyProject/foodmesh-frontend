@@ -1,14 +1,16 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState, type ReactNode } from "react";
-import { ApiError } from "./client";
+import { RUTA_CONSENTIMIENTO, rutaConsentimiento } from "../features/consentimiento/ruta";
+import { router } from "../router";
+import { ApiError, esConsentimientoRequerido } from "./client";
+import { shouldRetry } from "./reintentos";
 
-const MAX_REINTENTOS = 1;
-
-function shouldRetry(failureCount: number, error: unknown): boolean {
-  // Los 4xx no cambian al reintentar; solo reintentamos errores de red o del servidor.
-  if (error instanceof ApiError && error.status >= 400 && error.status < 500) return false;
-  return failureCount < MAX_REINTENTOS;
+function irAConsentimiento() {
+  const { pathname, search } = router.state.location;
+  // Varias queries pueden fallar a la vez: una sola navegación.
+  if (pathname === RUTA_CONSENTIMIENTO) return;
+  void router.navigate(rutaConsentimiento(pathname + search), { replace: true });
 }
 
 export function QueryProvider({ children }: { children: ReactNode }) {
@@ -19,6 +21,8 @@ export function QueryProvider({ children }: { children: ReactNode }) {
     const onError = (error: unknown) => {
       if (error instanceof ApiError && error.status === 401) {
         void loginWithRedirect({ appState: { returnTo: window.location.pathname } });
+      } else if (esConsentimientoRequerido(error)) {
+        irAConsentimiento();
       }
     };
     return new QueryClient({

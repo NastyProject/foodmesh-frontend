@@ -1,22 +1,14 @@
 import { useState, type ChangeEvent, type ReactNode } from "react";
 import { useNavigate } from "react-router";
-import { ApiError } from "../../api/client";
 import { useSubirFactura } from "../../api/facturas";
 import { prepararImagen } from "../../lib/imagen";
+import { falloDeError, type FalloSubida } from "./fallo";
 import { LeyendoFactura } from "./LeyendoFactura";
 import { SubidaFallida } from "./SubidaFallida";
 
 interface EscanearFacturaProps {
   /** Pinta los botones que disparan la subida. `ocupado` = subiendo o comprimiendo. */
   children: (abrir: () => void, ocupado: boolean) => ReactNode;
-}
-
-function mensajeDeError(error: Error): string {
-  if (error instanceof ApiError) {
-    if (error.status === 413) return "La foto pesa más de 10 MB. Prueba con una más liviana.";
-    if (error.status === 415) return "Ese archivo no es una foto JPG, PNG o WebP. Elige otra.";
-  }
-  return error.message;
 }
 
 /** Flujo único de "Escanear factura": elegir foto → comprimir si hace falta → subir → revisar. */
@@ -26,7 +18,7 @@ export function EscanearFactura({ children }: EscanearFacturaProps) {
   const navigate = useNavigate();
   const subir = useSubirFactura();
   const [preparando, setPreparando] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<FalloSubida | null>(null);
   const ocupado = preparando || subir.isPending;
 
   function abrir() {
@@ -54,7 +46,7 @@ export function EscanearFactura({ children }: EscanearFacturaProps) {
 
     subir.mutate(foto, {
       onSuccess: (factura) => navigate(`/facturas/${factura.id}`),
-      onError: (err) => setError(mensajeDeError(err)),
+      onError: (err) => setError(falloDeError(err)),
     });
   }
 
@@ -71,7 +63,7 @@ export function EscanearFactura({ children }: EscanearFacturaProps) {
       {children(abrir, ocupado)}
       {ocupado && <LeyendoFactura />}
       {error && !ocupado && (
-        <SubidaFallida mensaje={error} onElegirOtra={abrir} onCancelar={() => setError(null)} />
+        <SubidaFallida fallo={error} onElegirOtra={abrir} onCancelar={() => setError(null)} />
       )}
     </>
   );

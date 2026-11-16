@@ -1,15 +1,16 @@
 import { TriangleAlert } from "lucide-react";
 import { Button } from "../../components/Button";
+import type { FalloSubida } from "./fallo";
 
 interface SubidaFallidaProps {
-  mensaje: string;
+  fallo: FalloSubida;
   onElegirOtra: () => void;
   onCancelar: () => void;
 }
 
-// No es un <dialog> modal a propósito: "Elegir otra foto" hace click() en el input de archivo,
+// No es un <dialog> modal a propósito: "Elegir/Tomar otra foto" hace click() en el input de archivo,
 // que quedaría inerte detrás de un modal.
-export function SubidaFallida({ mensaje, onElegirOtra, onCancelar }: SubidaFallidaProps) {
+export function SubidaFallida({ fallo, onElegirOtra, onCancelar }: SubidaFallidaProps) {
   return (
     <div className="fixed inset-0 z-30 bg-paper">
       <div
@@ -18,12 +19,12 @@ export function SubidaFallida({ mensaje, onElegirOtra, onCancelar }: SubidaFalli
       >
         <div className="flex flex-col gap-2">
           <TriangleAlert size={28} strokeWidth={1.8} aria-hidden="true" className="text-soon-text" />
-          <h2 className="m-0 text-[22px] font-bold tracking-tight">No pudimos leer la foto</h2>
-          <p className="m-0 text-[15px] text-ink-2">{mensaje}</p>
+          <h2 className="m-0 text-[22px] font-bold tracking-tight">{fallo.titulo}</h2>
+          {fallo.mensaje && <p className="m-0 text-[15px] text-ink-2">{fallo.mensaje}</p>}
         </div>
         <div className="flex flex-col gap-3">
           <Button className="w-full" onClick={onElegirOtra}>
-            Elegir otra foto
+            {fallo.accion}
           </Button>
           <Button variant="secondary" className="w-full" onClick={onCancelar}>
             Cancelar

@@ -4,6 +4,69 @@
  */
 
 export interface paths {
+    "/consentimiento": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener Consentimiento */
+        get: operations["obtener_consentimiento_consentimiento_get"];
+        put?: never;
+        /**
+         * Guardar Consentimiento
+         * @description Crea o reemplaza el consentimiento. Con acepta_tratamiento=false se revoca: los
+         *     endpoints con datos del hogar vuelven a responder 403.
+         */
+        post: operations["guardar_consentimiento_consentimiento_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cuenta": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Eliminar Cuenta
+         * @description Borra la cuenta (y el hogar, si es su único miembro). Body obligatorio:
+         *     {"confirmar": "ELIMINAR"}. La identidad en Auth0 no se borra.
+         */
+        delete: operations["eliminar_cuenta_cuenta_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cuenta/exportar": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Exportar Cuenta
+         * @description Todos los datos del hogar del usuario (derecho de acceso, Ley 1581).
+         */
+        get: operations["exportar_cuenta_cuenta_exportar_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/inventario": {
         parameters: {
             query?: never;
@@ -90,6 +153,28 @@ export interface paths {
         put?: never;
         /** Confirmar */
         post: operations["confirmar_facturas__factura_id__confirmar_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/facturas/{factura_id}/reprocesar-con-imagen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reprocesar Con Imagen
+         * @description Respaldo con visión para formatos que el texto del OCR no resuelve. Body
+         *     obligatorio: {"acepto_enviar_imagen": true}, porque la foto completa (con todos
+         *     los datos de la factura) se envía a Google. Reemplaza los items_detectados.
+         */
+        post: operations["reprocesar_con_imagen_facturas__factura_id__reprocesar_con_imagen_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -199,6 +284,60 @@ export interface components {
             /** Archivo */
             archivo: string;
         };
+        /** ConfirmacionBorrado */
+        ConfirmacionBorrado: {
+            /**
+             * Confirmar
+             * @constant
+             */
+            confirmar: "ELIMINAR";
+        };
+        /** ConsentimientoExportado */
+        ConsentimientoExportado: {
+            /** Acepta Tratamiento */
+            acepta_tratamiento: boolean;
+            /** Acepta Analitica Agregada */
+            acepta_analitica_agregada: boolean;
+            /** Version Politica */
+            version_politica: string;
+            /** Otorgado En */
+            otorgado_en: string | null;
+            /**
+             * Actualizado En
+             * Format: date-time
+             */
+            actualizado_en: string;
+        };
+        /** ConsentimientoIn */
+        ConsentimientoIn: {
+            /** Acepta Tratamiento */
+            acepta_tratamiento: boolean;
+            /**
+             * Acepta Analitica Agregada
+             * @default false
+             */
+            acepta_analitica_agregada: boolean;
+            /** Version Politica */
+            version_politica: string;
+        };
+        /**
+         * ConsentimientoOut
+         * @description Si el usuario nunca respondió, acepta_tratamiento es false y el resto es null.
+         */
+        ConsentimientoOut: {
+            /** Acepta Tratamiento */
+            acepta_tratamiento: boolean;
+            /** Acepta Analitica Agregada */
+            acepta_analitica_agregada: boolean;
+            /** Version Politica */
+            version_politica: string | null;
+            /** Otorgado En */
+            otorgado_en: string | null;
+            /** Actualizado En */
+            actualizado_en: string | null;
+            /** Version Politica Vigente */
+            version_politica_vigente: string;
+        };
         /**
          * Dieta
          * @enum {string}
@@ -209,6 +348,24 @@ export interface components {
          * @enum {string}
          */
         EstadoFactura: "pendiente_validacion" | "confirmada" | "error";
+        /** Exportacion */
+        Exportacion: {
+            /**
+             * Exportado En
+             * Format: date-time
+             */
+            exportado_en: string;
+            usuario: components["schemas"]["UsuarioExportado"];
+            hogar: components["schemas"]["HogarExportado"];
+            consentimiento: components["schemas"]["ConsentimientoExportado"] | null;
+            preferencias: components["schemas"]["Preferencias"];
+            /** Inventario */
+            inventario: components["schemas"]["ItemOut"][];
+            /** Facturas */
+            facturas: components["schemas"]["FacturaOut"][];
+            /** Recomendaciones */
+            recomendaciones: components["schemas"]["RecomendacionExportada"][];
+        };
         /**
          * FacturaOut
          * @description Lo que la API devuelve. No incluye hogar_id, imagen_key ni recortada (son internos).
@@ -229,8 +386,11 @@ export interface components {
             requiere_revision: boolean;
             /** Texto Ocr */
             texto_ocr: string | null;
+            metodo: components["schemas"]["MetodoFactura"];
             /** Items Detectados */
             items_detectados: components["schemas"]["ItemPropuesto"][];
+            /** Items Descartados */
+            items_descartados: number;
             /** Error */
             error: string | null;
             /**
@@ -250,6 +410,18 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** HogarExportado */
+        HogarExportado: {
+            /** Nombre */
+            nombre: string;
+            /**
+             * Creado En
+             * Format: date-time
+             */
+            creado_en: string;
+            /** Otros Miembros */
+            otros_miembros: number;
         };
         /** IngredienteOut */
         IngredienteOut: {
@@ -344,6 +516,8 @@ export interface components {
         ItemPropuesto: {
             /** Codigo */
             codigo?: string | null;
+            /** Descripcion Impresa */
+            descripcion_impresa?: string | null;
             /** Nombre */
             nombre: string;
             /** Cantidad */
@@ -359,6 +533,11 @@ export interface components {
              * @enum {string}
              */
             categoria: "lacteos" | "carnes_pescados" | "frutas_verduras" | "granos_cereales" | "enlatados_conservas" | "panaderia" | "bebidas" | "condimentos_especias" | "frutos_secos" | "snacks_dulces" | "congelados" | "aseo_hogar" | "cuidado_personal" | "mascotas" | "otros";
+            /**
+             * Nombre Incierto
+             * @default false
+             */
+            nombre_incierto: boolean;
             /**
              * Origen
              * @default ia
@@ -398,6 +577,11 @@ export interface components {
             /** Fecha Vencimiento */
             fecha_vencimiento?: string | null;
         };
+        /**
+         * MetodoFactura
+         * @enum {string}
+         */
+        MetodoFactura: "texto" | "vision";
         /** PedidoRecetas */
         PedidoRecetas: {
             /**
@@ -454,6 +638,33 @@ export interface components {
             /** Ingredientes Faltantes */
             ingredientes_faltantes: string[];
         };
+        /** RecomendacionExportada */
+        RecomendacionExportada: {
+            /** Id */
+            id: number;
+            /**
+             * Creada En
+             * Format: date-time
+             */
+            creada_en: string;
+            tipo: components["schemas"]["TipoRecomendacion"];
+            /** Modelo */
+            modelo: string;
+            /** Recetas */
+            recetas: components["schemas"]["RecetaOut"][];
+            /** Feedback */
+            feedback: {
+                [key: string]: boolean;
+            };
+        };
+        /** ReprocesoConImagen */
+        ReprocesoConImagen: {
+            /**
+             * Acepto Enviar Imagen
+             * @constant
+             */
+            acepto_enviar_imagen: true;
+        };
         /** RespuestaRecomendacion */
         RespuestaRecomendacion: {
             /** Recomendacion Id */
@@ -473,6 +684,23 @@ export interface components {
             latencia_ms: number;
             /** Modelo */
             modelo: string;
+        };
+        /**
+         * TipoRecomendacion
+         * @enum {string}
+         */
+        TipoRecomendacion: "normal" | "nuevas" | "precalculo";
+        /** UsuarioExportado */
+        UsuarioExportado: {
+            /** Auth0 Sub */
+            auth0_sub: string;
+            /** Email */
+            email: string | null;
+            /**
+             * Creado En
+             * Format: date-time
+             */
+            creado_en: string;
         };
         /**
          * UsuarioOut
@@ -508,6 +736,110 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    obtener_consentimiento_consentimiento_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConsentimientoOut"];
+                };
+            };
+        };
+    };
+    guardar_consentimiento_consentimiento_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConsentimientoIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConsentimientoOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    eliminar_cuenta_cuenta_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConfirmacionBorrado"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    exportar_cuenta_cuenta_exportar_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Exportacion"];
+                };
+            };
+        };
+    };
     listar_inventario_get: {
         parameters: {
             query?: {
@@ -773,6 +1105,41 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ItemOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reprocesar_con_imagen_facturas__factura_id__reprocesar_con_imagen_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                factura_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReprocesoConImagen"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FacturaOut"];
                 };
             };
             /** @description Validation Error */

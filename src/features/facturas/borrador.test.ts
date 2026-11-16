@@ -12,6 +12,7 @@ const base: ItemPropuesto = {
   categoria: "frutas_verduras",
   origen: "ia",
   revisar: false,
+  nombre_incierto: false,
   es_alimento: true,
 };
 function primero(lista: Borrador[]): Borrador {
